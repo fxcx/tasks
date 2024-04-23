@@ -34,6 +34,10 @@ def user_login(request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
+
+            if request.user.is_staff:
+                return redirect("/admin")
+
             return redirect("tasks:index")
     else:
         form = AuthenticationForm()
@@ -55,30 +59,35 @@ def index(request):
     if request.user.is_authenticated is False:
         return redirect("tasks:login")
 
-    if request.GET.get('state') is None:
+    if request.GET.get("state") is None:
         state = "all"
     else:
         state = request.GET["state"]
-    
-    if request.GET.get('category') is None:
+
+    if request.GET.get("category") is None:
         category = "all"
     else:
         category = request.GET["category"]
-    
+
     if state == "all" and category == "all":
         tasks = Task.objects.filter(user=request.user)
     elif state == "all" and category != "all":
         selected_category = Category.objects.get(name=category)
-        tasks = Task.objects.filter(user__id=request.user.id , category__id= selected_category.id )
+        tasks = Task.objects.filter(
+            user__id=request.user.id, category__id=selected_category.id
+        )
     elif state != "all" and category == "all":
-        selected_state = state == 'completed'
-        tasks = Task.objects.filter(user__id=request.user.id, completed= selected_state)
+        selected_state = state == "completed"
+        tasks = Task.objects.filter(user__id=request.user.id, completed=selected_state)
     else:
         # state != "all" and category != "all":
-        selected_state = state == 'completed'
+        selected_state = state == "completed"
         selected_category = Category.objects.get(name=category)
-        tasks = Task.objects.filter(user__id=request.user.id , category__id= selected_category.id, completed= selected_state )
-
+        tasks = Task.objects.filter(
+            user__id=request.user.id,
+            category__id=selected_category.id,
+            completed=selected_state,
+        )
 
     default_category = Category.objects.get(pk=1)
     categories = [default_category]
@@ -89,7 +98,13 @@ def index(request):
     return render(
         request,
         "index.html",
-        {"user": request.user, "tasks": tasks, "categories": categories, "state":state, "category":category},
+        {
+            "user": request.user,
+            "tasks": tasks,
+            "categories": categories,
+            "state": state,
+            "category": category,
+        },
     )
 
 
@@ -107,26 +122,28 @@ def create(request):
 
     return render(request, "create.html", {"form": form})
 
+
 def update(request, id):
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid():
             task = Task.objects.get(pk=id)
-            task.title = form.cleaned_data['title']
-            task.description = form.cleaned_data['description']
-            task.completed = form.cleaned_data['completed']
-            task.category = form.cleaned_data['category']
+            task.title = form.cleaned_data["title"]
+            task.description = form.cleaned_data["description"]
+            task.completed = form.cleaned_data["completed"]
+            task.category = form.cleaned_data["category"]
 
             task.save()
             return redirect("tasks:index")
 
     else:
         task = Task.objects.get(pk=id)
-        form = TaskForm(instance= task)
+        form = TaskForm(instance=task)
 
-    return render(request, "create.html", {"form": form , "id":id})
+    return render(request, "create.html", {"form": form, "id": id})
+
 
 def delete(request, id):
     task = Task.objects.get(pk=id)
     task.delete()
-    return redirect("tasks:index") 
+    return redirect("tasks:index")
