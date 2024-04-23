@@ -6,15 +6,22 @@ from .models import Task, Category
 def index(request):
     if request.user.is_authenticated is False:
         return redirect("tasks:login")
-
+    
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False) 
+            instance.user = request.user
+            instance.save()
+             
     default_category = Category.objects.get(pk=1)
     categories = [default_category]
     user_categories = Category.objects.filter(user=request.user)
     if user_categories:
-        categories.append(user_categories)
+        categories.extend(user_categories)
 
     form = CategoryForm()
-
+    
     return render(
         request,
         "categories.html",
@@ -22,36 +29,18 @@ def index(request):
     )
 
 
-def create(request):
-    if request.method == "POST":
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.user = request.user
-            instance.save()
-            return redirect("tasks:index")
-
-    else:
-        form = TaskForm()
-
-    return render(request, "create.html", {"form": form})
-
 def update(request, id):
     if request.method == "POST":
-        form = TaskForm(request.POST)
+        form = CategoryForm(request.POST)
         if form.is_valid():
-            task = Task.objects.get(pk=id)
-            task.title = form.cleaned_data['title']
-            task.description = form.cleaned_data['description']
-            task.completed = form.cleaned_data['completed']
-            task.category = form.cleaned_data['category']
-
-            task.save()
+            category = Category.objects.get(pk=id)
+            category.name = form.cleaned_data['name']
+            category.save()
             return redirect("tasks:index")
 
     else:
-        task = Task.objects.get(pk=id)
-        form = TaskForm(instance= task)
+        task = Category.objects.get(pk=id)
+        form = CategoryForm(instance= task)
 
     return render(request, "create.html", {"form": form , "id":id})
 
