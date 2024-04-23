@@ -1,12 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tasks app</title>
+    <style>
+      header {
+        display: flex;
+        flex-direction: column;
+    }
+    .state {
+        display: flex;
+        align-items: center;
+    }
+    main{
+        display: flex;
+    }
+</style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const form = document.getElementById('filters');
+          const radios = form.querySelectorAll('input[type="radio"]');
+          const select = document.getElementById('category');
+      
+          radios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+              form.submit();
+            });
+          });
+      
+          select.addEventListener('change', function() {
+            form.submit();
+          });
+        });
+      </script>
+      
 </head>
 <body>
-    <p>Usuario logueado: {{user}}</p>
-    <a href="{% url 'tasks:logout' %}">Cerrar sesión</a>
+    <header>
+        <form id="filters" action="" method="GET">
+            <div class="state">
+                <p>State:</p>
+                <div>
+                    <input type="radio" value="all" name="state" {% if state == 'all' %}checked{% endif %} />
+                    <label for="">All</label>
+                </div>
+                <div>
+                    <input type="radio" value="pending" name="state" {% if state == 'pending' %}checked{% endif %}  />
+                    <label for="">Pending</label>
+                </div>
+                <div>
+                    <input type="radio" value="completed" name="state" {% if state == 'completed' %}checked{% endif %}  />
+                    <label for="">Completed</label>
+                </div>
+            </div>
+            
+            <div class="category">
+                <span>Category: </span>
+                <select name="category" id="category">
+                    <option value="all" {% if category == 'all' %} selected{% endif %}>All</option>
+                    {% for current_category  in categories  %}
+                    <option value="{{current_category.name}}" {% if category == current_category.name %} selected{% endif %}>{{current_category.name}} </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        </header>
+        <main >
+            <nav>
+                <h2>Tasks list</h2>
+                <span>{{ user }}</span>
+                <ul>
+                    <li><a href="{% url 'tasks:create' %}">Create new task</a></li>
+                    <li><a href="{% url 'tasks:categories' %}">Categories</a></li>
+                    <li><a href="{% url 'tasks:logout' %}">Logout</a></li>
+                </ul>
+            </nav>
+            
+            <section>
+                {% for task in tasks %}
+                <article>
+                    <h3>{{task.title}}</h3>
+                    <p>{{task.description}}</p>
+                    <label>
+
+                    <input disabled type="checkbox" {% if task.completed %}
+                        checked
+                    {% endif %}>
+                    {% if task.completed  %}
+                        Completed
+
+                    {% else %}
+                        Pending  
+                    {% endif %}
+                </label>
+                <a href="{% url 'tasks:update' task.id %}">Edit</a>
+                <a href="{% url 'tasks:delete' task.id %}" onclick="javascript: return confirm('Are you sure?')">Delete</a>
+
+            </article>
+            {% endfor %}
+        </section>
+        
+    </main>
+        
+    
 </body>
 </html>

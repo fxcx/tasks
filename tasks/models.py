@@ -23,21 +23,18 @@ class Category(models.Model):
 
     @classmethod
     def get_default_category(cls):
-        default_category, _ = cls.objects.get_or_create(name="Sin categoría", user=None)
+        default_category, _ = cls.objects.get_or_create(name="No category", user=None)
         return default_category
 
     def __str__(self) -> str:
-        if self.user is not None:
-            return f"{self.name}, {self.user.email}"
-        else:
-            return f"{self.name}, Sin usuario asociado"
+        return self.name
+
 
 
 class Task(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
     completed = models.BooleanField(default=False)
-    priority = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(
         Category, on_delete=models.SET_DEFAULT, default=Category.get_default_category
