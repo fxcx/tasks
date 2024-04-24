@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import TaskForm, CategoryForm
-from .models import Task, Category
+from .forms import  CategoryForm
+from .models import  Category
 
 
 def index(request):
@@ -36,7 +36,7 @@ def update(request, id):
             category = Category.objects.get(pk=id)
             category.name = form.cleaned_data['name']
             category.save()
-            return redirect("tasks:index")
+            return redirect("tasks:categories")
 
     else:
         task = Category.objects.get(pk=id)
@@ -44,7 +44,7 @@ def update(request, id):
 
     return render(request, "create.html", {"form": form , "id":id})
 
-def delete(request, id):
-    task = Task.objects.get(pk=id)
-    task.delete()
-    return redirect("tasks:index") 
+def delete(_request, id):
+    category = Category.objects.get(pk=id)
+    category.delete()
+    return redirect("tasks:categories") 
