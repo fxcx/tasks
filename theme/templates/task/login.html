@@ -1,0 +1,50 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% tailwind_css %}
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <a href="{% url 'tasks:register' %}">register</a>
+<section class="flex justify-center w-full">
+    <article class=" grid place-content-center">
+        <div class="flex items-center justify-center min-h-screen min-w-screen">
+          <div class="relative min-w-[400px] max-w-[400px] min-h-[500px] max-h-[500px] border border-black bg-gray-100 drop-shadow-2xl">
+            <div class="absolute flex flex-col w-full space-y-5 py-8">
+              <h1 class="text-center">bienvenidos</h1>
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                </div>
+       </article>
+    </section>
+</body>
+</html>

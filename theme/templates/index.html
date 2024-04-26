@@ -1,0 +1,269 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Task app</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+  </head>
+  <body class="bg-gray-50 font-serif leading-normal tracking-normal">
+    <header class="inline-block max-w-full">
+      <section class="flex flex-row justify-between w-screen bg-cyan-900">
+        <div class="flex items-center p-1 mr-1">
+          <div class="flex-shrink-0 h-16 w-16">
+            <img class="h-16 w-16 rounded-full border" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="" />
+          </div>
+          <div class="ml-4">
+            <div class="text-2xl text-white font-light leading-normal">
+              Hello,<br />{{user}}
+            </div>
+          </div>
+        </div>
+        <form id="filters" action="" method="GET">
+          <div class="state">
+            <p>State:</p>
+            <div>
+              <input type="radio" value="all" name="state" {% if state == 'all' %}checked{% endif %} />
+              <label for="">All</label>
+            </div>
+            <div>
+              <input type="radio" value="pending" name="state" {% if state == 'pending' %}checked{% endif %}  />
+              <label for="">Pending</label>
+            </div>
+            <div>
+              <input type="radio" value="completed" name="state" {% if state == 'completed' %}checked{% endif %}  />
+              <label for="">Completed</label>
+            </div>
+          </div>
+          
+          <div class="category">
+            <span>Category: </span>
+            <select name="category" id="category">
+              <option value="all" {% if category == 'all' %} selected{% endif %}>All</option>
+              {% for current_category  in categories  %}
+              <option value="{{current_category.name}}" {% if category == current_category.name %} selected{% endif %}>{{current_category.name}} </option>
+              {% endfor %}
+            </select>
+          </div>
+        </form>
+      </section>
+    </header>
+    <main class="flex max-w-full">
+      <section class="flex w-1/2 flex-col bg-clip-border rounded-xl bg-white text-gray-700 h-[calc(100vh-2rem)] max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+			  <div class="mb-2 p-4">
+          <h5 class="block antialiased tracking-normal font-sans text-xl font-semibold leading-snug text-gray-900">home</h5>
+			  </div>
+			  <nav class="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
+          <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+            <div class="grid place-items-center mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
+                <path fill-rule="evenodd" d="M2.25 2.25a.75.75 0 000 1.5H3v10.5a3 3 0 003 3h1.21l-1.172 3.513a.75.75 0 001.424.474l.329-.987h8.418l.33.987a.75.75 0 001.422-.474l-1.17-3.513H18a3 3 0 003-3V3.75h.75a.75.75 0 000-1.5H2.25zm6.04 16.5l.5-1.5h6.42l.5 1.5H8.29zm7.46-12a.75.75 0 00-1.5 0v6a.75.75 0 001.5 0v-6zm-3 2.25a.75.75 0 00-1.5 0v3.75a.75.75 0 001.5 0V9zm-3 2.25a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <a href="{% url 'tasks:categories' %}">Categories</a>
+          </div>
+          <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+            <div class="grid place-items-center mr-4">
+              <svg xmlns="http://www.w3.org/200/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
+                <path fill-rule="evenodd" d="M18.656.93,6.464,13.122A4.966,4.966,0,0,0,5,16.657V18a1,1,0,0,0,1,1H7.343a4.966,4.966,0,0,0,3.535-1.464L23.07,5.344a3.125,3.125,0,0,0,0-4.414A3.194,3.194,0,0,0,18.656.93Zm3,3L9.464,16.122A3.02,3.02,0,0,1,7.343,17H7v-.343a3.02,3.02,0,0,1,.878-2.121L20.07,2.344a1.148,1.148,0,0,1,1.586,0A1.123,1.123,0,0,1,21.656,3.93Z" />
+                <path d="M23,8.979a1,1,0,0,0-1,1V15H18a3,3,0,0,0-3,3v4H5a3,3,0,0,1-3-3V5A3,3,0,0,1,5,2h9.042a1,1,0,0,0,0-2H5A5.006,5.006,0,0,0,0,5V19a5.006,5.006,0,0,0,5,5H16.343a4.968,4.968,0,0,0,3.536-1.464l2.656-2.658A4.968,4.968,0,0,0,24,16.343V9.979A1,1,0,0,0,23,8.979ZM18.465,21.122a2.975,2.975,0,0,1-1.465.8V18a1,1,0,0,1,1-1h3.925a3.016,3.016,0,0,1-.8,1.464Z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <a href="{% url 'tasks:create' %}">Create new task</a>
+          </div>
+          <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+            <div class="grid place-items-center mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
+                <path fill-rule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 00-2.282.819l-.922 1.597a1.875 1.875 0 00.432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 000 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 00-.432 2.385l.922 1.597a1.875 1.875 0 002.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 002.28-.819l.923-1.597a1.875 1.875 0 00-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 000-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 00-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 00-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 00-1.85-1.567h-1.843zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd"></path>
+              </svg>
+            </div>setting
+          </div>
+				<div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+          <div class="grid place-items-center mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
+              <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v9a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM6.166 5.106a.75.75 0 010 1.06 8.25 8.25 0 1011.668 0 .75.75 0 111.06-1.06c3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788a.75.75 0 011.06 0z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <a href="{% url 'tasks:logout' %}">Logout</a>
+				</div>
+			  </nav>
+			</section>
+			<section class="flex flex-wrap justify-center w-full">
+        {% for task in tasks %}
+        <article class=" grid place-content-center ">
+          <div class="flex items-center justify-center min-h-screen min-w-screen">
+            <div class="relative min-w-[400px] max-w-[400px] min-h-[500px] max-h-[500px] border border-black bg-gray-100 drop-shadow-2xl">
+              <div class="absolute flex flex-col w-full space-y-5 py-8">
+                <h1 class="text-center">{{task.title}}</h1>
+                <div class="absolute text-center">
+                  <div>
+                    <p>{{task.description}}</p>
+                   </div>
+                   <label>
+                     <input disabled type="checkbox" {% if task.completed %}
+                     checked
+                     {% endif %}>
+                     {% if task.completed  %}
+                     Completed
+                     
+                     {% else %}
+                     Pending  
+                     {% endif %}
+                   </label>
+                   <a href="{% url 'tasks:update' task.id %}">Edit</a>
+                   <a href="{% url 'tasks:delete' task.id %}" onclick="javascript: return confirm('Are you sure?')">Delete</a>
+                 </div>
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+                 <hr class="border-zinc-400 mx-2" />
+               </div>
+             </article>
+        {% endfor %}
+			 {% block tasks %}
+       {% endblock %}
+      </section>
+    </main>
+    
+    <footer class="flex flex-row items-end w-full bg-gray-900">
+      <section class="w-full text-gray-700 body-font">
+        <div class="container flex flex-col flex-wrap px-5 py-24 mx-auto md:items-center lg:items-start md:flex-row md:flex-no-wrap">
+          <div class="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left">
+            <a class="flex items-center justify-center font-medium text-gray-900 title-font md:justify-start">
+              <svg class="w-auto h-5 text-gray-900 fill-current" viewBox="0 0 202 69" xmlns="http://www.w3.org/2000/svg">
+                <path d="M57.44.672s6.656 1.872 6.656 5.72c0 0-1.56 2.6-3.744 6.552 8.424 1.248 16.744 1.248 23.816-1.976-1.352 7.904-12.688 8.008-26.208 6.136-7.696 13.624-19.656 36.192-19.656 42.848 0 .416.208.624.52.624 4.576 0 17.888-14.352 21.112-18.824 1.144-1.456 4.264.728 3.12 2.392C56.608 53.088 42.152 69 36.432 69c-4.472 0-8.216-5.928-8.216-10.4 0-6.552 11.752-28.08 20.28-42.952-9.984-1.664-20.176-3.64-27.976-3.848-13.936 0-16.64 3.536-17.576 6.032-.104.312-.52.52-.832.312-3.744-7.072-1.456-14.56 14.144-14.56 9.36 0 22.048 4.576 34.944 7.592C54.736 5.04 57.44.672 57.44.672zm46.124 41.08c1.144-1.456 4.264.728 3.016 2.392C100.236 53.088 85.78 69 80.06 69c-4.576 0-8.32-5.928-8.32-10.4v-.208C67.58 64.32 63.524 69 61.34 69c-4.472 0-8.944-4.992-8.944-11.856 0-10.608 15.704-33.072 24.96-33.072 4.992 0 7.384 2.392 8.528 4.576l2.6-4.576s6.656 1.976 6.656 5.824c0 0-13.312 24.336-13.312 30.056 0 .208 0 .624.52.624 4.472 0 17.888-14.352 21.216-18.824zm-40.56 18.72c2.184 0 11.752-13.312 17.368-22.048l4.16-7.488c-8.008-7.904-27.248 29.536-21.528 29.536zm57.564-38.168c-2.184 0-4.992-2.808-4.992-4.784 0-2.912 5.824-14.872 7.28-14.872 2.6 0 6.136 2.808 6.136 6.344 0 2.08-7.176 12.064-8.424 13.312zm-17.68 46.592c-4.472 0-8.216-5.928-8.216-10.4 0-6.656 16.744-34.528 16.744-34.528s6.552 1.976 6.552 5.824c0 0-13.312 24.336-13.312 30.056 0 .208.104.624.624.624 4.472 0 17.888-14.352 21.112-18.824 1.144-1.456 4.264.728 3.12 2.392-6.448 8.944-20.904 24.856-26.624 24.856zM147.244.672s6.656 1.872 6.656 5.72c0 0-25.792 43.784-25.792 53.56 0 .416.208.624.52.624 4.576 0 17.888-14.352 21.112-18.824 1.144-1.456 4.264.728 3.12 2.392C146.412 53.088 131.956 69 126.236 69c-4.472 0-8.216-5.928-8.216-10.4 0-10.4 29.224-57.928 29.224-57.928zM169.7 60.16c3.848-2.392 7.904-6.864 10.816-10.92 6.656-9.464 11.544-20.696 10.504-27.352-.312-3.432-.104-4.056 3.12-2.704 5.2 2.392 11.336 8.632 2.184 22.88-5.2 8.008-12.48 15.288-19.344 19.76-2.704 1.768-6.344 3.328-9.984 4.16-.52.416-1.04.728-1.456.936-1.872 1.352-4.264 2.08-7.592 2.08-14.664 0-16.848-12.272-16.848-16.016 0-2.392 3.224-4.68 4.784-3.744.208.104.312.416.312.624 0 2.808 1.872 13.104 9.984 13.104 7.904 0 3.432-18.304 2.288-27.144-1.456 2.288-3.432 4.992-5.616 8.32-2.6 3.744-5.72 1.456-4.784 0 5.824-8.424 9.152-13.832 11.856-18.616 1.248-2.08 3.328-3.328 6.448-3.328 2.704 0 5.824 3.016 6.864 4.784.312.52 0 1.04-.52 1.144a5.44 5.44 0 00-4.368 5.408c0 6.968 2.6 17.16 1.664 24.856l-.312 1.768z" fill-rule="nonzero" />
+              </svg>
+            </a>
+            <p class="mt-2 text-sm text-gray-500">Design, Code and Ship!</p>
+            <div class="mt-4">
+              <span class="inline-flex justify-center mt-2 sm:ml-auto sm:mt-0 sm:justify-start">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-700">
+                  <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-500 cursor-pointer hover:text-gray-700">
+                  <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-500 cursor-pointer hover:text-gray-700">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-500 cursor-pointer hover:text-gray-700">
+                  <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                    <circle cx="4" cy="4" r="2" stroke="none"></circle>
+                  </svg>
+                </a>
+              </span>
+            </div>
+          </div>
+          <div class="flex flex-wrap flex-grow mt-10 -mb-10 text-center md:pl-20 md:mt-0 md:text-left">
+          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">About</h2>
+            <nav class="mb-10 list-none">
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Company</a>
+              </li>
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Careers</a>
+              </li>
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Blog</a>
+              </li>
+            </nav>
+          </div>
+          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Support</h2>
+            <nav class="mb-10 list-none">
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Contact Support</a>
+              </li>
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Help Resources</a>
+              </li>
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Release Updates</a>
+              </li>
+            </nav>
+          </div>
+          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Platform</h2>
+            <nav class="mb-10 list-none">
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Terms &amp; Privacy</a>
+              </li>
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Pricing</a>
+              </li>
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">FAQ</a>
+              </li>
+            </nav>
+          </div>
+          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Contact</h2>
+            <nav class="mb-10 list-none">
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Send a Message</a>
+              </li>
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Request a Quote</a>
+              </li>
+              <li class="mt-3">
+                <a class="text-gray-500 cursor-pointer hover:text-gray-900">+123-456-7890</a>
+              </li>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-700">
+        <div class="container px-5 py-4 mx-auto">
+          <p class="text-sm text-gray-700 capitalize xl:text-center">@gmail.com</p>
+        </div>
+      </div>
+    </section>
+  </footer>
+  <script src="{% static 'js/main.js' %}"></script>
+  {% comment %} <script >
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('filters');
+      const radios = form.querySelectorAll('input[type="radio"]');
+      const select = document.getElementById('category');
+  
+      radios.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+          form.submit();
+        });
+      });
+  
+      select.addEventListener('change', function() {
+        form.submit();
+      });
+    });
+  </script> {% endcomment %}
+ </body>
+</html>

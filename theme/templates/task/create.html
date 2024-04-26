@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% block tasks %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Task</title>
+  </head>
+  <body>
+    
+    <form action="" method="post">
+      {% csrf_token %}
+      {{error_messages}}
+      {{ form }}
+      
+      <button type="submit">{% if id %}Update{% else %} Create{% endif %} </button>
+      <button onclick="goBack();">Cancel</button>
+      
+    </form>
+    <script>
+      function goBack(){
+        window.location = "/tasks"
+      }
+    </script>
+  </body>
+  </html>
+  {% endblock %}
+  
