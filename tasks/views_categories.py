@@ -41,7 +41,6 @@ def update(request, id):
     else:
         task = Category.objects.get(pk=id)
         form = CategoryForm(instance= task)
-
     return render(request, "task/create.html", {"form": form , "id":id})
 
 def delete(_request, id):
