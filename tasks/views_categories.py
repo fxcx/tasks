@@ -24,7 +24,7 @@ def index(request):
     
     return render(
         request,
-        "categories.html",
+        "task/categories.html",
         {"categories": categories, "form":form},
     )
 
@@ -42,7 +42,7 @@ def update(request, id):
         task = Category.objects.get(pk=id)
         form = CategoryForm(instance= task)
 
-    return render(request, "create.html", {"form": form , "id":id})
+    return render(request, "task/create.html", {"form": form , "id":id})
 
 def delete(_request, id):
     category = Category.objects.get(pk=id)

@@ -23,7 +23,7 @@ def register(request):
     else:
         form = UserCreationForm()
 
-    return render(request, "register.html", {"form": form})
+    return render(request, "task/register.html", {"form": form})
 
 
 def user_login(request):
@@ -42,7 +42,7 @@ def user_login(request):
     else:
         form = AuthenticationForm()
 
-    return render(request, "login.html", {"form": form})
+    return render(request, "task/login.html", {"form": form})
 
 
 def user_logout(request):
@@ -107,7 +107,6 @@ def index(request):
         },
     )
 
-
 def create(request):
     if request.method == "POST":
         form = TaskForm(request.POST)
@@ -120,7 +119,7 @@ def create(request):
     else:
         form = TaskForm()
 
-    return render(request, "create.html", {"form": form})
+    return render(request, "task/create.html", {"form": form})
 
 
 def update(request, id):
@@ -140,7 +139,7 @@ def update(request, id):
         task = Task.objects.get(pk=id)
         form = TaskForm(instance=task)
 
-    return render(request, "create.html", {"form": form, "id": id})
+    return render(request, "task/create.html", {"form": form, "id": id})
 
 
 def delete(request, id):
