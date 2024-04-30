@@ -28,6 +28,7 @@
         {% for category in categories %}
         <div class="category">
           <p>{{ category.name }}</p>
+          
           {% if category.id != 1 %}
           <a href="{% url 'tasks:update_category' category.id %}">Edit</a>
           <a href="{% url 'tasks:delete_category' category.id %}" onclick="javascript: return confirm('Are you sure?')">Delete</a>
