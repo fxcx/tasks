@@ -93,7 +93,7 @@ def index(request):
     categories = [default_category]
     user_categories = Category.objects.filter(user=request.user)
     if user_categories:
-        categories.append(user_categories)
+        categories.extend(user_categories)
 
     return render(
         request,
