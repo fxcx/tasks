@@ -93,51 +93,47 @@
 			</section>
 			<section class="flex flex-wrap justify-center w-full">
         {% for task in tasks %}
-        <article class=" grid place-content-center ">
+        <article class="grid place-content-center">
           <div class="flex items-center justify-center min-h-screen min-w-screen">
             <div class="relative min-w-[400px] max-w-[400px] min-h-[500px] max-h-[500px] border border-black bg-gray-100 drop-shadow-2xl">
-              <div class="absolute flex flex-col w-full space-y-5 py-8">
+              <div class="absolute flex flex-col w-full space-y-6 py-6">
                 <h1 class="text-center">{{task.title}}</h1>
-                <div class="absolute text-center">
-                  <div>
-                    <p>{{task.description}}</p>
-                   </div>
-                   <label>
-                     <input type="checkbox" {% if task.completed %}
-                     checked
-                     {% endif %}>
-                     {% if task.completed  %}
-                     Completed
-                     
-                     {% else %}
-                     Pending  
-                     {% endif %}
-                   </label>
-                   <a href="{% url 'tasks:update' task.id %}">Edit</a>
-                   <a href="{% url 'tasks:delete' task.id %}" onclick="javascript: return confirm('Are you sure?')">Delete</a>
-                 </div>
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-                 <hr class="border-zinc-400 mx-2" />
-               </div>
+                <div class="text-center">
+                  <div class="absolute flex flex-col font-medium text-gray-700 w-[400px]">
+                    <p class="break-words p-1">{{task.description}}</p>
+                  </div>
+                </div>
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                  <hr class="border-zinc-400 mx-2" />
+                <div class="relative flex justify-between">
+                    <label class="">
+                      <input type="checkbox" {% if task.completed %}
+                      checked
+                      {% endif %}>
+                      {% if task.completed  %}
+                      Completed
+                      
+                      {% else %}
+                      Pending  
+                      {% endif %}
+                    </label>
+                    <a href="{% url 'tasks:update' task.id %}">Edit</a>
+                    <a href="{% url 'tasks:delete' task.id %}" onclick="javascript: return confirm('Are you sure?')">Delete</a>
+                </div>
+              </div>
              </article>
         {% endfor %}
 			 {% block tasks %}
