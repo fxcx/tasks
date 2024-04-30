@@ -8,9 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     {% tailwind_css %}
   </head>
-  <body class="bg-gray-50 font-serif leading-normal tracking-normal">
-    <header class="inline-block max-w-full">
-      <section class="flex flex-row justify-between w-screen bg-cyan-900">
+  <body class="bg-gray-50 font-serif leading-normal tracking-normal w-screen">
+    <header class="inline-block max-w-full ">
+      <section class="flex justify-center w-screen gap-5 bg-cyan-900">
         <div class="flex items-center p-1 mr-1">
           <div class="flex-shrink-0 h-16 w-16">
             <img class="h-16 w-16 rounded-full border" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="" />
@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-        <form id="filters" action="" method="GET">
+        <form id="filters" action="" method="GET" class="flex justify-center">
           <div class="state">
             <p>State:</p>
             <div>
@@ -38,7 +38,7 @@
             </div>
           </div>
           
-          <div class="category">
+          <div class="category p-1">
             <span>Category: </span>
             <select name="category" id="category">
               <option value="all" {% if category == 'all' %} selected{% endif %}>All</option>
@@ -249,22 +249,5 @@
     </section>
   </footer>
   <script src="{% static 'js/main.js' %}"></script>
-  <script >
-    document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('filters');
-      const radios = form.querySelectorAll('input[type="radio"]');
-      const select = document.getElementById('category');
-  
-      radios.forEach(function(radio) {
-        radio.addEventListener('change', function() {
-          form.submit();
-        });
-      });
-  
-      select.addEventListener('change', function() {
-        form.submit();
-      });
-    });
-  </script>
  </body>
 </html>

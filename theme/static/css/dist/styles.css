@@ -1039,12 +1039,24 @@ select {
   justify-content: center;
 }
 
-.justify-between {
-  justify-content: space-between;
+.justify-stretch {
+  justify-content: stretch;
+}
+
+.justify-items-end {
+  justify-items: end;
+}
+
+.justify-items-center {
+  justify-items: center;
 }
 
 .gap-1 {
   gap: 0.25rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
 }
 
 .space-y-5 > :not([hidden]) ~ :not([hidden]) {
