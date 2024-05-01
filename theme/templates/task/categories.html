@@ -1,5 +1,4 @@
 {% extends "index.html" %}
-{% block tasks %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tasks - categories</title>
   </head>
-  <body>
-    <h1>Categories</h1>
-    <main>
-      <section>
-        <form action="" method="POST" class="form">
+{% block tasks %}
+  <section class="flex flex-col gap-2 justify-center w-svw h-svh">
+      <div>
+        <h1 class="text-center">Categories</h1>
+      </div>
+      <section class="flex gap-5 justify-center">
+        <form action="" method="POST" class="form flex gap-5">
           {% csrf_token %}
           {{form.as_p}}
           <button type="submit">
@@ -23,10 +24,10 @@
           </button>
         </form>
       </section>
-      <section class="list">
-        <h2>Name:</h2>
+      <section class="grid place-content-center gap-5 mr-4 p-2">
         {% for category in categories %}
-        <div class="category">
+        <div class="category flex justify-items-center gap-7">
+          <button class="bg-teal-800 hover:bg-cyan-900 text-white font-bold py-2 px-4 rounded">Tags</button>
           <p>{{ category.name }}</p>
           
           {% if category.id != 1 %}
@@ -36,8 +37,7 @@
         </div>
         {% endfor %}
       </section>
-    </main>
-  </body>
-  </html>
+  </section>
   {% endblock %}
+</html>
   
