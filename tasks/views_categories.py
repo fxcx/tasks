@@ -19,7 +19,6 @@ def index(request):
     user_categories = Category.objects.filter(user=request.user)
     if user_categories:
         categories.extend(user_categories)
-        print(categories)
 
     form = CategoryForm()
     
@@ -28,6 +27,8 @@ def index(request):
         "task/categories.html",
         {"categories": categories, "form":form},
     )
+
+
 
 
 def update(request, id):
