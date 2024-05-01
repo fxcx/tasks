@@ -8,15 +8,19 @@
     {% tailwind_css %}
     <title>Login</title>
 </head>
-<body>
-    <h1>Login</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <a href="{% url 'tasks:register' %}">register</a>
-<section class="flex justify-center w-full">
+<body class="flex p-2 ml-3 justify-between box-content">
+    <section class="grid place-content-center w-1/2 p-1">
+        <article>
+            <h1>Login</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+            <a href="{% url 'tasks:register' %}">register</a>
+        </article>
+    </section>
+<section class="flex justify-center w-full p-1">
     <article class=" grid place-content-center">
         <div class="flex items-center justify-center min-h-screen min-w-screen">
           <div class="relative min-w-[400px] max-w-[400px] min-h-[500px] max-h-[500px] border border-black bg-gray-100 drop-shadow-2xl">
