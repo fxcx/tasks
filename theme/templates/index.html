@@ -147,9 +147,21 @@
                         Pending  
                       </h3>
                       {% endif %}
-                    </label>
-                    <a href="{% url 'tasks:update' task.id %}">Edit</a>
-                    <a href="{% url 'tasks:delete' task.id %}" onclick="javascript: return confirm('Are you sure?')">Delete</a>
+                  </label>
+                    <div class="flex">
+                      <div>
+                        <a href="{% url 'tasks:update' task.id %}">
+                          <?xml version="1.0" encoding="UTF-8"?>
+                          <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="22" height="22"><polygon points="14.604 5.687 0 20.29 0 24 3.71 24 18.313 9.396 14.604 5.687"/><path d="M23.232.768a2.624,2.624,0,0,0-3.71,0l-3.5,3.505,3.709,3.709,3.5-3.5A2.624,2.624,0,0,0,23.232.768Z"/></svg>
+                        </div>
+                      </a>
+                      <div class="mx-5"> 
+                        <a href="{% url 'tasks:delete' task.id %}" onclick="javascript: return confirm('Are you sure?')">
+                          <?xml version="1.0" encoding="UTF-8"?>
+                          <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="22" height="22"><path d="m19,0H5C2.243,0,0,2.243,0,5v14c0,2.757,2.243,5,5,5h14c2.757,0,5-2.243,5-5V5c0-2.757-2.243-5-5-5Zm-1.231,6.641l-4.466,5.359,4.466,5.359c.354.425.296,1.056-.128,1.409-.188.155-.414.231-.64.231-.287,0-.571-.122-.77-.359l-4.231-5.078-4.231,5.078c-.198.237-.482.359-.77.359-.226,0-.452-.076-.64-.231-.424-.354-.481-.984-.128-1.409l4.466-5.359-4.466-5.359c-.354-.425-.296-1.056.128-1.409.426-.353,1.056-.296,1.409.128l4.231,5.078,4.231-5.078c.354-.424.983-.48,1.409-.128.424.354.481.984.128,1.409Z"/></svg>
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </article>
