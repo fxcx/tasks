@@ -29,8 +29,6 @@ def index(request):
     )
 
 
-
-
 def update(request, id):
     if request.method == "POST":
         form = CategoryForm(request.POST)

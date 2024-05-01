@@ -9,9 +9,9 @@
     {% tailwind_css %}
   </head>
   <body class="bg-gray-50 font-serif leading-normal tracking-normal w-screen">
-    <header class="inline-block max-w-full ">
-      <section class="flex justify-center w-screen gap-5 bg-cyan-900">
-        <div class="flex items-center p-1 mr-1">
+    <header class="grid max-w-full ">
+      <section class="flex justify-evenly w-screen gap-5 bg-cyan-900">
+        <div class="flex justify-center p-1 mr-1">
           <div class="flex-shrink-0 h-16 w-16">
             <img class="h-16 w-16 rounded-full border" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="" />
           </div>
@@ -37,7 +37,7 @@
               <label for="">Completed</label>
             </div>
           </div>
-          <div class="category p-1">
+          <div class="category">
             <span>Category: </span>
             <select name="category" id="category">
               <option value="all" {% if category == 'all' %} selected{% endif %}>All</option>
@@ -134,15 +134,18 @@
                 <hr class="border-zinc-400 mx-2" />
                 <hr class="border-zinc-400 mx-2" />
                 <div class="relative flex justify-between">
-                  <label class="">
-                    <input type="checkbox" {% if task.completed %}
+                  <label class="flex">
+                    <input type="checkbox" class="p-3" {% if task.completed %}
                       checked
                       {% endif %}>
                       {% if task.completed  %}
-                      Completed
-                      
+                        <h3 class="bg-green-400 rounded-md p-0.5 ml-3 text-sm">
+                          Completed
+                        </h3>
                       {% else %}
-                      Pending  
+                      <h3 class="bg-red-700 rounded-md p-1 ml-4 text-sm">
+                        Pending  
+                      </h3>
                       {% endif %}
                     </label>
                     <a href="{% url 'tasks:update' task.id %}">Edit</a>
