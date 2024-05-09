@@ -1,0 +1,29 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}
+  <title>Create task</title>
+{% endblock %}
+
+{% block content %}
+  <section class="grid place-content-center">
+    <div class="flex flex-col justify-center gap-5 w-screen">
+      <form action="" method="post" class="flex justify-center gap-7">
+        <div>
+          {% csrf_token %}
+          {{ error_messages }}
+          {{ form }}
+
+          <button type="submit">
+            {% if id %}
+              Update
+            {% else %}
+              Create
+            {% endif %}
+          </button>
+          <button onclick="goBack();">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <script src='js/location.js'></script>
+{% endblock %}

@@ -2,59 +2,38 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Task app</title>
+
+    {% block title %}
+    {% endblock %}
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     {% tailwind_css %}
   </head>
   <body class="bg-gray-50 font-serif leading-normal tracking-normal w-screen">
-    <header class="grid max-w-full ">
-      <section class="flex justify-evenly w-screen gap-5 bg-cyan-900">
+    <header class="grid max-w-full">
+      <div class="flex justify-evenly w-screen gap-5 bg-cyan-900">
         <div class="flex justify-center p-1 mr-1">
           <div class="flex-shrink-0 h-16 w-16">
             <img class="h-16 w-16 rounded-full border" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="" />
           </div>
           <div class="ml-4">
             <div class="text-2xl text-white font-light leading-normal">
-              Hello,<br />{{user}}
+              Hello,<br />{{ user }}
             </div>
           </div>
         </div>
-        <form id="filters" action="" method="GET" class="flex justify-center">
-          <div class="state">
-            <p>State:</p>
-            <div>
-              <input type="radio" value="all" name="state" {% if state == 'all' %}checked{% endif %} />
-              <label for="">All</label>
-            </div>
-            <div>
-              <input type="radio" value="pending" name="state" {% if state == 'pending' %}checked{% endif %}  />
-              <label for="">Pending</label>
-            </div>
-            <div>
-              <input type="radio" value="completed" name="state" {% if state == 'completed' %}checked{% endif %}  />
-              <label for="">Completed</label>
-            </div>
-          </div>
-          <div class="category">
-            <span>Category: </span>
-            <select name="category" id="category">
-              <option value="all" {% if category == 'all' %} selected{% endif %}>All</option>
-              {% for current_category  in categories  %}
-              <option value="{{current_category.name}}" {% if category == current_category.name %} selected{% endif %}>{{current_category.name}} </option>
-              {% endfor %}
-            </select>
-          </div>
-        </form>
-      </section>
+
+        {% block filters %}
+        {% endblock %}
+
+      </div>
     </header>
     <main class="flex max-w-full overflow-y-scroll">
-      <section class="flex w-1/2 flex-col bg-clip-border rounded-xl bg-white text-gray-700 h-[calc(100vh-2rem)] max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-			  <div class="mb-2 p-4">
-          <p>tags</p>
-			  </div>
-			  <nav class="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
+      <aside class="flex w-1/2 flex-col bg-clip-border rounded-xl bg-white text-gray-700 h-[calc(100vh-2rem)] max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+        <div class="mb-2 p-4"></div>
+        <nav class="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
           <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
             <div class="grid place-items-center mr-4">
               <svg xmlns="http://www.w3.org/200/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
@@ -64,14 +43,16 @@
             </div>
             <a href="{% url 'tasks:create' %}">Create new task</a>
           </div>
-          <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+          <div role="button" tabindex="1" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
             <div class="grid place-items-center mr-2">
-              <?xml version="1.0" encoding="utf-8"?>
-              <svg width="30px" height="25px" viewBox="0 0 1192 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M212 32h600c32.8 0 60 27.2 60 60v840c0 32.8-27.2 60-60 60h-600c-32.8 0-60-27.2-60-60v-840C152 59.2 179.2 32 212 32z" fill="#FFFFFF" />
+              <?xml version="1.0" encoding="utf-8"?><svg width="30px" height="25px" viewBox="0 0 1192 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <path d="M212 32h600c32.8 0 60 27.2 60 60v840c0 32.8-27.2 60-60 60h-600c-32.8 0-60-27.2-60-60v-840C152 59.2 179.2 32 212 32z" fill="#FFFFFF" />
                 <path d="M414.4 876H271.2c-10.4 0-19.2-8.8-19.2-19.2V713.6c0-10.4 8.8-19.2 19.2-19.2h143.2c10.4 0 19.2 8.8 19.2 19.2v143.2c0 10.4-8.8 19.2-19.2 19.2z" fill="#FFFFFF" />
-                <path d="M812 1000h-600c-37.6 0-68-30.4-68-68v-840C144 54.4 174.4 24 212 24h600c37.6 0 68 30.4 68 68v840c0 37.6-30.4 68-68 68zM212 40C183.2 40 160 63.2 160 92v840c0 28.8 23.2 52 52 52h600c28.8 0 52-23.2 52-52v-840c0-28.8-23.2-52-52-52h-600z" fill="#6A576D" /><path d="M414.4 330.4H271.2c-10.4 0-19.2-8.8-19.2-19.2v-144c0-10.4 8.8-19.2 19.2-19.2h143.2c10.4 0 19.2 8.8 19.2 19.2v143.2c0 11.2-8.8 20-19.2 20z" fill="#82CFCD" />
+                <path d="M812 1000h-600c-37.6 0-68-30.4-68-68v-840C144 54.4 174.4 24 212 24h600c37.6 0 68 30.4 68 68v840c0 37.6-30.4 68-68 68zM212 40C183.2 40 160 63.2 160 92v840c0 28.8 23.2 52 52 52h600c28.8 0 52-23.2 52-52v-840c0-28.8-23.2-52-52-52h-600z" fill="#6A576D" />
+                <path d="M414.4 330.4H271.2c-10.4 0-19.2-8.8-19.2-19.2v-144c0-10.4 8.8-19.2 19.2-19.2h143.2c10.4 0 19.2 8.8 19.2 19.2v143.2c0 11.2-8.8 20-19.2 20z" fill="#82CFCD" />
                 <path d="M414.4 338.4H271.2c-15.2 0-27.2-12-27.2-27.2v-144c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v143.2c0 15.2-12 28-27.2 28zM271.2 156c-6.4 0-11.2 4.8-11.2 11.2v143.2c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V167.2c0-6.4-4.8-11.2-11.2-11.2H271.2z" fill="#6A576D" />
-                <path d="M414.4 603.2H271.2c-10.4 0-19.2-8.8-19.2-19.2V440c0-10.4 8.8-19.2 19.2-19.2h143.2c10.4 0 19.2 8.8 19.2 19.2v144c0 10.4-8.8 19.2-19.2 19.2z" fill="#82CFCD" /><path d="M414.4 611.2H271.2c-15.2 0-27.2-12-27.2-27.2V440c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v144c0 14.4-12 27.2-27.2 27.2zM271.2 428.8c-6.4 0-11.2 4.8-11.2 11.2v144c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V440c0-6.4-4.8-11.2-11.2-11.2H271.2zM414.4 884H271.2c-15.2 0-27.2-12-27.2-27.2V713.6c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v143.2c0 15.2-12 27.2-27.2 27.2zM271.2 701.6c-6.4 0-11.2 4.8-11.2 11.2V856c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V713.6c0-6.4-4.8-11.2-11.2-11.2H271.2zM414.4 338.4H271.2c-15.2 0-27.2-12-27.2-27.2v-144c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v143.2c0 15.2-12 28-27.2 28zM271.2 156c-6.4 0-11.2 4.8-11.2 11.2v143.2c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V167.2c0-6.4-4.8-11.2-11.2-11.2H271.2z" fill="#6A576D" />
+                <path d="M414.4 603.2H271.2c-10.4 0-19.2-8.8-19.2-19.2V440c0-10.4 8.8-19.2 19.2-19.2h143.2c10.4 0 19.2 8.8 19.2 19.2v144c0 10.4-8.8 19.2-19.2 19.2z" fill="#82CFCD" />
+                <path d="M414.4 611.2H271.2c-15.2 0-27.2-12-27.2-27.2V440c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v144c0 14.4-12 27.2-27.2 27.2zM271.2 428.8c-6.4 0-11.2 4.8-11.2 11.2v144c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V440c0-6.4-4.8-11.2-11.2-11.2H271.2zM414.4 884H271.2c-15.2 0-27.2-12-27.2-27.2V713.6c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v143.2c0 15.2-12 27.2-27.2 27.2zM271.2 701.6c-6.4 0-11.2 4.8-11.2 11.2V856c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V713.6c0-6.4-4.8-11.2-11.2-11.2H271.2zM414.4 338.4H271.2c-15.2 0-27.2-12-27.2-27.2v-144c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v143.2c0 15.2-12 28-27.2 28zM271.2 156c-6.4 0-11.2 4.8-11.2 11.2v143.2c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V167.2c0-6.4-4.8-11.2-11.2-11.2H271.2z" fill="#6A576D" />
                 <path d="M414.4 611.2H271.2c-15.2 0-27.2-12-27.2-27.2V440c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v144c0 14.4-12 27.2-27.2 27.2zM271.2 428.8c-6.4 0-11.2 4.8-11.2 11.2v144c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V440c0-6.4-4.8-11.2-11.2-11.2H271.2zM414.4 884H271.2c-15.2 0-27.2-12-27.2-27.2V713.6c0-15.2 12-27.2 27.2-27.2h143.2c15.2 0 27.2 12 27.2 27.2v143.2c0 15.2-12 27.2-27.2 27.2zM271.2 701.6c-6.4 0-11.2 4.8-11.2 11.2V856c0 6.4 4.8 11.2 11.2 11.2h143.2c6.4 0 11.2-4.8 11.2-11.2V713.6c0-6.4-4.8-11.2-11.2-11.2H271.2zM768 247.2H548c-4.8 0-8-3.2-8-8s3.2-8 8-8H768c4.8 0 8 3.2 8 8s-3.2 8-8 8z" fill="#6A576D" />
                 <path d="M768 520H548c-4.8 0-8-3.2-8-8s3.2-8 8-8H768c4.8 0 8 3.2 8 8s-3.2 8-8 8z" fill="#6A576D" />
                 <path d="M766.4 792.8H546.4c-4.8 0-8-3.2-8-8s3.2-8 8-8h220c4.8 0 8 3.2 8 8s-4 8-8 8z" fill="#6A576D" />
@@ -79,7 +60,7 @@
             </div>
             <a href="{% url 'tasks:index' %}">Taks list</a>
           </div>
-          <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+          <div role="button" tabindex="2" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
             <div class="grid place-items-center mr-4">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
                 <path fill-rule="evenodd" d="M2.25 2.25a.75.75 0 000 1.5H3v10.5a3 3 0 003 3h1.21l-1.172 3.513a.75.75 0 001.424.474l.329-.987h8.418l.33.987a.75.75 0 001.422-.474l-1.17-3.513H18a3 3 0 003-3V3.75h.75a.75.75 0 000-1.5H2.25zm6.04 16.5l.5-1.5h6.42l.5 1.5H8.29zm7.46-12a.75.75 0 00-1.5 0v6a.75.75 0 001.5 0v-6zm-3 2.25a.75.75 0 00-1.5 0v3.75a.75.75 0 001.5 0V9zm-3 2.25a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5z" clip-rule="evenodd"></path>
@@ -87,15 +68,15 @@
             </div>
             <a href="{% url 'tasks:categories' %}">Categories</a>
           </div>
-          <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+          <div role="button" tabindex="3" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
             <div class="grid place-items-center mr-4">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
                 <path fill-rule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 00-2.282.819l-.922 1.597a1.875 1.875 0 00.432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 000 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 00-.432 2.385l.922 1.597a1.875 1.875 0 002.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 002.28-.819l.923-1.597a1.875 1.875 0 00-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 000-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 00-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 00-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 00-1.85-1.567h-1.843zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd"></path>
               </svg>
             </div>
-            <a href="{% url 'tasks:logout' %}">settings</a>
+            <a href="{% url 'tasks:logout' %}">Settings</a>
           </div>
-          <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+          <div role="button" tabindex="4" class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
             <div class="grid place-items-center mr-4">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
                 <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v9a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM6.166 5.106a.75.75 0 010 1.06 8.25 8.25 0 1011.668 0 .75.75 0 111.06-1.06c3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788a.75.75 0 011.06 0z" clip-rule="evenodd"></path>
@@ -104,72 +85,12 @@
             <a href="{% url 'tasks:logout' %}">Logout</a>
           </div>
         </nav>
-      </section>
-      {% block tasks %}
-      <section class="flex flex-wrap gap-7 justify-center w-full">
-        {% for task in tasks %}
-        <article class="grid place-content-center">
-          <div class="flex items-center justify-center min-h-screen min-w-screen">
-            <div class="relative min-w-[400px] max-w-[400px] min-h-[500px] max-h-[500px] border border-black bg-gray-100 drop-shadow-2xl">
-              <div class="absolute flex flex-col w-full space-y-6 py-6">
-                <h1 class="text-center">{{task.title}}</h1>
-                <div class="text-center">
-                  <div class="absolute flex flex-col font-medium text-gray-700 w-[400px]">
-                    <p class="break-words p-1">{{task.description}}</p>
-                  </div>
-                </div>
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <hr class="border-zinc-400 mx-2" />
-                <div class="relative flex justify-between">
-                  <label class="flex">
-                    <input type="checkbox" class="p-3" {% if task.completed %}
-                      checked
-                      {% endif %}>
-                      {% if task.completed  %}
-                        <h3 class="bg-green-400 rounded-md p-0.5 ml-3 text-sm">
-                          Completed
-                        </h3>
-                      {% else %}
-                      <h3 class="bg-red-700 rounded-md p-1 ml-4 text-sm">
-                        Pending  
-                      </h3>
-                      {% endif %}
-                  </label>
-                    <div class="flex">
-                      <div>
-                        <a href="{% url 'tasks:update' task.id %}">
-                          <?xml version="1.0" encoding="UTF-8"?>
-                          <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="22" height="22"><polygon points="14.604 5.687 0 20.29 0 24 3.71 24 18.313 9.396 14.604 5.687"/><path d="M23.232.768a2.624,2.624,0,0,0-3.71,0l-3.5,3.505,3.709,3.709,3.5-3.5A2.624,2.624,0,0,0,23.232.768Z"/></svg>
-                        </div>
-                      </a>
-                      <div class="mx-5"> 
-                        <a href="{% url 'tasks:delete' task.id %}" onclick="javascript: return confirm('Are you sure?')">
-                          <?xml version="1.0" encoding="UTF-8"?>
-                          <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="22" height="22"><path d="m19,0H5C2.243,0,0,2.243,0,5v14c0,2.757,2.243,5,5,5h14c2.757,0,5-2.243,5-5V5c0-2.757-2.243-5-5-5Zm-1.231,6.641l-4.466,5.359,4.466,5.359c.354.425.296,1.056-.128,1.409-.188.155-.414.231-.64.231-.287,0-.571-.122-.77-.359l-4.231-5.078-4.231,5.078c-.198.237-.482.359-.77.359-.226,0-.452-.076-.64-.231-.424-.354-.481-.984-.128-1.409l4.466-5.359-4.466-5.359c-.354-.425-.296-1.056.128-1.409.426-.353,1.056-.296,1.409.128l4.231,5.078,4.231-5.078c.354-.424.983-.48,1.409-.128.424.354.481.984.128,1.409Z"/></svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-        {% endfor %}
-      </section>
+      </aside>
+
+      {% block content %}
       {% endblock %}
+
     </main>
-    
     <footer class="flex flex-row items-end w-full bg-gray-900">
       <section class="w-full text-gray-700 body-font">
         <div class="container flex flex-col flex-wrap px-5 py-24 mx-auto md:items-center lg:items-start md:flex-row md:flex-no-wrap">
@@ -208,71 +129,71 @@
             </div>
           </div>
           <div class="flex flex-wrap flex-grow mt-10 -mb-10 text-center md:pl-20 md:mt-0 md:text-left">
-          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
-            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">About</h2>
-            <nav class="mb-10 list-none">
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Company</a>
-              </li>
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Careers</a>
-              </li>
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Blog</a>
-              </li>
-            </nav>
-          </div>
-          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
-            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Support</h2>
-            <nav class="mb-10 list-none">
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Contact Support</a>
-              </li>
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Help Resources</a>
-              </li>
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Release Updates</a>
-              </li>
-            </nav>
-          </div>
-          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
-            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Platform</h2>
-            <nav class="mb-10 list-none">
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Terms &amp; Privacy</a>
-              </li>
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Pricing</a>
-              </li>
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">FAQ</a>
-              </li>
-            </nav>
-          </div>
-          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
-            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Contact</h2>
-            <nav class="mb-10 list-none">
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Send a Message</a>
-              </li>
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">Request a Quote</a>
-              </li>
-              <li class="mt-3">
-                <a class="text-gray-500 cursor-pointer hover:text-gray-900">+123-456-7890</a>
-              </li>
-            </nav>
+            <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+              <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">About</h2>
+              <nav class="mb-10 list-none">
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Company</a>
+                </li>
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Careers</a>
+                </li>
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Blog</a>
+                </li>
+              </nav>
+            </div>
+            <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+              <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Support</h2>
+              <nav class="mb-10 list-none">
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Contact Support</a>
+                </li>
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Help Resources</a>
+                </li>
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Release Updates</a>
+                </li>
+              </nav>
+            </div>
+            <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+              <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Platform</h2>
+              <nav class="mb-10 list-none">
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Terms &amp; Privacy</a>
+                </li>
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Pricing</a>
+                </li>
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">FAQ</a>
+                </li>
+              </nav>
+            </div>
+            <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+              <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">Contact</h2>
+              <nav class="mb-10 list-none">
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Send a Message</a>
+                </li>
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">Request a Quote</a>
+                </li>
+                <li class="mt-3">
+                  <a class="text-gray-500 cursor-pointer hover:text-gray-900">+123-456-7890</a>
+                </li>
+              </nav>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="bg-gray-700">
-        <div class="container px-5 py-4 mx-auto">
-          <p class="text-sm text-gray-700 capitalize xl:text-center">@gmail.com</p>
+        <div class="bg-gray-700">
+          <div class="container px-5 py-4 mx-auto">
+            <p class="text-sm text-gray-700 capitalize xl:text-center">@gmail.com</p>
+          </div>
         </div>
-      </div>
-    </section>
-  </footer>
-  <script src="{% static 'js/main.js' %}"></script>
- </body>
+      </section>
+    </footer>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
 </html>

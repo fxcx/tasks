@@ -1,0 +1,102 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}
+<title> Tasks list </title>
+{% endblock %}
+
+
+{% block filters %}
+<form id="filters" action="" method="GET" class="flex justify-center">
+    <div class="state">
+        <p>State:</p>
+        <div>
+            <input type="radio" value="all" name="state" id="all" {% if state == 'all' %}checked{% endif %} />
+            <label for="all">All</label>
+        </div>
+        <div>
+            <input type="radio" value="pending" name="state" id="pending" {% if state == 'pending' %}checked{% endif %}  />
+            <label for="pending">Pending</label>
+        </div>
+        <div>
+            <input type="radio" value="completed" name="state" id="completed" {% if state == 'completed' %}checked{% endif %}  />
+            <label for="completed">Completed</label>
+        </div>
+    </div>
+    <div class="category">
+        <span>Category: </span>
+        <select name="category" id="category">
+            <option value="all" {% if category == 'all' %} selected{% endif %}>All</option>
+            {% for current_category  in categories  %}
+            <option value="{{current_category.name}}" {% if category == current_category.name %} selected{% endif %}>{{current_category.name}} </option>
+            {% endfor %}
+        </select>
+    </div>
+</form>
+{% endblock %}
+
+
+{% block content %}
+<section class="flex flex-wrap gap-7 justify-center w-full">
+  {% for task in tasks %}
+  <article class="grid place-content-center">
+    <div class="flex items-center justify-center min-h-screen min-w-screen">
+      <div class="relative min-w-[400px] max-w-[400px] min-h-[500px] max-h-[500px] border border-black bg-gray-100 drop-shadow-2xl">
+        <div class="absolute flex flex-col w-full space-y-6 py-6">
+          <h1 class="text-center">{{task.title}}</h1>
+          <div class="text-center">
+            <div class="absolute flex flex-col font-medium text-gray-700 w-[400px]">
+              <p class="break-words p-1">{{task.description}}</p>
+            </div>
+          </div>
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <hr class="border-zinc-400 mx-2" />
+          <div class="relative flex justify-between pb-2 mx-2">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" 
+                    value="{{task.id}}" 
+                    name="toggleCompleted"> 
+                <button id="toggleCompletedButton" type="submit" class="{% if task.completed  %} bg-green-400 {% else %} bg-red-700 {% endif %} rounded-md p-1 text-sm">
+                    {% if task.completed  %}
+                        Completed
+                    {% else %}
+                        Pending  
+                    {% endif %}
+                </button>
+            </form>
+            <h3 class="bg-indigo-400 rounded-md p-1 ml-3 text-sm">
+                {{task.category.name}}
+            </h3>
+              <div class="flex">
+                <div>
+                  <a title="Edit" href="{% url 'tasks:update' task.id %}">
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="22" height="22"><polygon points="14.604 5.687 0 20.29 0 24 3.71 24 18.313 9.396 14.604 5.687"/><path d="M23.232.768a2.624,2.624,0,0,0-3.71,0l-3.5,3.505,3.709,3.709,3.5-3.5A2.624,2.624,0,0,0,23.232.768Z"/></svg>
+                  </div>
+                </a>
+                <div class="ml-5"> 
+                  <a title="Delete" href="{% url 'tasks:delete' task.id %}" onclick="javascript: return confirm('Are you sure?')">
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="22" height="22"><path d="m19,0H5C2.243,0,0,2.243,0,5v14c0,2.757,2.243,5,5,5h14c2.757,0,5-2.243,5-5V5c0-2.757-2.243-5-5-5Zm-1.231,6.641l-4.466,5.359,4.466,5.359c.354.425.296,1.056-.128,1.409-.188.155-.414.231-.64.231-.287,0-.571-.122-.77-.359l-4.231-5.078-4.231,5.078c-.198.237-.482.359-.77.359-.226,0-.452-.076-.64-.231-.424-.354-.481-.984-.128-1.409l4.466-5.359-4.466-5.359c-.354-.425-.296-1.056.128-1.409.426-.353,1.056-.296,1.409.128l4.231,5.078,4.231-5.078c.354-.424.983-.48,1.409-.128.424.354.481.984.128,1.409Z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+  {% endfor %}
+</section>
+{% endblock %}

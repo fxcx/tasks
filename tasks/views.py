@@ -58,6 +58,12 @@ def index(request):
 
     if request.user.is_authenticated is False:
         return redirect("tasks:login")
+    
+    if request.method == 'POST':
+        task_id = request.POST.get('toggleCompleted')
+        task = Task.objects.get(pk=task_id)
+        task.completed = not task.completed
+        task.save()       
 
     if request.GET.get("state") is None:
         state = "all"
@@ -97,7 +103,7 @@ def index(request):
 
     return render(
         request,
-        "index.html",
+        "tasks/tasks_list.html",
         {
             "user": request.user,
             "tasks": tasks,
@@ -119,7 +125,7 @@ def create(request):
     else:
         form = TaskForm()
 
-    return render(request, "task/create.html", {"form": form})
+    return render(request, "tasks/create.html", {"form": form})
 
 
 def update(request, id):
@@ -139,7 +145,7 @@ def update(request, id):
         task = Task.objects.get(pk=id)
         form = TaskForm(instance=task)
 
-    return render(request, "task/create.html", {"form": form, "id": id})
+    return render(request, "tasks/create.html", {"form": form, "id": id})
 
 
 def delete(request, id):
