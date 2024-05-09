@@ -3,7 +3,7 @@
 ![screenshot](image.png)
 
 ## Caracteristicas
-- Registro de usarios 
+- Registro de usuarios 
 - Rutas protegidas
 - Crud de categorias por usuario
 - Crud de tareas por usuario
