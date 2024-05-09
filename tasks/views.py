@@ -23,7 +23,7 @@ def register(request):
     else:
         form = UserCreationForm()
 
-    return render(request, "task/register.html", {"form": form})
+    return render(request, "tasks/register.html", {"form": form})
 
 
 def user_login(request):
@@ -42,7 +42,7 @@ def user_login(request):
     else:
         form = AuthenticationForm()
 
-    return render(request, "task/login.html", {"form": form})
+    return render(request, "tasks/login.html", {"form": form})
 
 
 def user_logout(request):
@@ -115,7 +115,7 @@ def index(request):
 
 def create(request):
     if request.method == "POST":
-        form = TaskForm(request.POST)
+        form = TaskForm(request.POST, user=request.user)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = request.user
@@ -123,14 +123,14 @@ def create(request):
             return redirect("tasks:index")
 
     else:
-        form = TaskForm()
+        form = TaskForm(user=request.user)
 
     return render(request, "tasks/create.html", {"form": form})
 
 
 def update(request, id):
     if request.method == "POST":
-        form = TaskForm(request.POST)
+        form = TaskForm(request.POST, user=request.user)
         if form.is_valid():
             task = Task.objects.get(pk=id)
             task.title = form.cleaned_data["title"]
@@ -143,7 +143,7 @@ def update(request, id):
 
     else:
         task = Task.objects.get(pk=id)
-        form = TaskForm(instance=task)
+        form = TaskForm(instance=task,user=request.user)
 
     return render(request, "tasks/create.html", {"form": form, "id": id})
 

@@ -1,4 +1,5 @@
 {% extends 'tasks/base.html' %}
+{% load static  %}
 
 {% block title %}
   <title>Create task</title>
@@ -25,5 +26,5 @@
       </form>
     </div>
   </section>
-  <script src='js/location.js'></script>
+  <script src="{% static 'js/location.js' %}"></script>
 {% endblock %}
